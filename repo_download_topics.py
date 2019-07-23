@@ -15,7 +15,7 @@ def is_child(patch, patch_list):
 
     if 'neededBy' not in patch_list[patch['project']]:
 	# the patch in the buffer is not needed by any patches
-	return 0
+        return 0
 
     for commit in patch['dependsOn']:
 	# if the patch is needed by a existing one, replace the existing one with the incoming patch
@@ -68,7 +68,7 @@ def download_topics(args):
 		command = ['ssh', '-p', str(args.port), args.server, args.remote, 'query', '--format=JSON', '--dependencies', '--current-patch-set', 'topic:' + topic]
 		print("querying '{}', '{}'".format(topic, " ".join(command)))
 		try:
-			commits = subprocess.check_output(command)
+			commits = subprocess.check_output(command).decode('utf-8')
 			if 'project' not in commits:
 				print("warning: no patches for topic '{}'".format(topic))
 			else:
